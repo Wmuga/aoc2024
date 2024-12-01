@@ -6,14 +6,14 @@ import (
 	"strconv"
 	"time"
 
+	fileparser "github.com/wmuga/aoc2019/pkg/fileParser"
 	"github.com/wmuga/aoc2024/internal/days"
-	fileparser "github.com/wmuga/aoc2024/pkg/fileParser"
 	"github.com/wmuga/aoc2024/pkg/picker"
 )
 
 const (
 	dayNum     = 1
-	withPart2  = false
+	withPart2  = true
 	toTest     = true
 	debugInput = false
 )
