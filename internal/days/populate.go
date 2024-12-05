@@ -2,12 +2,14 @@ package days
 
 import (
 	"github.com/wmuga/aoc2024/internal/days/day1"
+	"github.com/wmuga/aoc2024/internal/days/day2"
 	"github.com/wmuga/aoc2024/pkg/models"
 	"github.com/wmuga/aoc2024/pkg/picker"
 )
 
 var days = []models.Day{
 	day1.Day{},
+	day2.Day{},
 }
 
 func Populate(d *picker.DayRunner) *picker.DayRunner {
