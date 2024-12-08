@@ -14,7 +14,7 @@ import (
 const (
 	dayNum     = 3
 	withPart2  = true
-	toTest     = true
+	toTest     = false
 	debugInput = false
 )
 

@@ -19,8 +19,6 @@ func (Day) Solve1(input []string, debug bool) string {
 }
 
 func (Day) Solve2(input []string, debug bool) string {
-	print := utils.DebugPrint(debug)
-	_ = print
 	return solve(input, debug, false)
 }
 

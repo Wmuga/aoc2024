@@ -1,3 +1,4 @@
 inputs/day*/*.txt
 .idea
 .vscode
+main

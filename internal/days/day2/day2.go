@@ -20,7 +20,6 @@ func (Day) Solve2(input []string, debug bool) string {
 	return solve(input, debug, true)
 }
 
-// ПЕРЕДЕЛАТЬ на рекурсию
 func solve(input []string, debug bool, canErr bool) string {
 	print := utils.DebugPrint(debug)
 	data := parse(input)
