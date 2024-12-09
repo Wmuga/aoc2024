@@ -13,11 +13,11 @@ import (
 
 const (
 	// day number
-	dayNum = 4
+	dayNum = 5
 	// solve part 2
 	withPart2 = true
 	// Check solution on test data
-	toTest = true
+	toTest = false
 	// add debug prints to solution
 	debugInput = false
 )
