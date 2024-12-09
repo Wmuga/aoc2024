@@ -12,9 +12,13 @@ import (
 )
 
 const (
-	dayNum     = 3
-	withPart2  = true
-	toTest     = false
+	// day number
+	dayNum = 4
+	// solve part 2
+	withPart2 = true
+	// Check solution on test data
+	toTest = true
+	// add debug prints to solution
 	debugInput = false
 )
 
