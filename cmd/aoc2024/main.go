@@ -13,7 +13,7 @@ import (
 
 const (
 	// day number
-	dayNum = 5
+	dayNum = 6
 	// solve part 2
 	withPart2 = true
 	// Check solution on test data
@@ -92,10 +92,12 @@ func main() {
 	fmt.Println("\nAnswers:")
 
 	start := time.Now()
-	fmt.Println("Time:", time.Since(start), "Part 1:", day.Solve1(inData, debugInput))
+	res := day.Solve1(inData, debugInput)
+	fmt.Println("Time:", time.Since(start), "Part 1:", res)
 
 	if withPart2 {
 		start = time.Now()
-		fmt.Println("Time:", time.Since(start), "Part 2:", day.Solve2(inData, debugInput))
+		res := day.Solve2(inData, debugInput)
+		fmt.Println("Time:", time.Since(start), "Part 2:", res)
 	}
 }
