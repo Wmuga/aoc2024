@@ -5,24 +5,11 @@ import (
 
 	"github.com/wmuga/aoc2019/pkg/utils"
 
+	"github.com/wmuga/aoc2024/pkg/models"
 	"github.com/wmuga/aoc2024/pkg/set"
 )
 
-type point struct {
-	x, y int
-}
-
-func (p point) Add(o point) point {
-	return point{p.x + o.x, p.y + o.y}
-}
-
-func (p point) Sub(o point) point {
-	return point{p.x - o.x, p.y - o.y}
-}
-
-func (p point) String() string {
-	return "{" + strconv.Itoa(p.x) + "; " + strconv.Itoa(p.y) + "}"
-}
+type point = models.Point2D
 
 type field struct {
 	startPos point
@@ -30,7 +17,7 @@ type field struct {
 	size     point
 }
 
-var dirs = []point{{0, -1}, {1, 0}, {0, 1}, {-1, 0}}
+var dirs = []point{{X: 0, Y: -1}, {X: 1, Y: 0}, {X: 0, Y: 1}, {X: -1, Y: 0}}
 
 type Day struct{}
 
@@ -61,8 +48,8 @@ func (Day) Solve2(input []string, debug bool) string {
 			continue
 		}
 
-		byX2 := addCloned(byX, pos.x, pos.y)
-		byY2 := addCloned(byY, pos.y, pos.x)
+		byX2 := addCloned(byX, pos.X, pos.Y)
+		byY2 := addCloned(byY, pos.Y, pos.X)
 
 		if checkLoop(f.startPos, byX2, byY2) {
 			counter++
@@ -91,29 +78,29 @@ func checkLoop(start point, byX, byY map[int][]int) bool {
 		var nextCoord = -1
 		switch dir {
 		case 0:
-			if len(byX[pos.x]) == 0 {
+			if len(byX[pos.X]) == 0 {
 				return false
 			}
-			nextCoord = minCoord(byX[pos.x], pos.y, nextCoord, false)
-			pos.y = nextCoord + 1
+			nextCoord = minCoord(byX[pos.X], pos.Y, nextCoord, false)
+			pos.Y = nextCoord + 1
 		case 1:
-			if len(byY[pos.y]) == 0 {
+			if len(byY[pos.Y]) == 0 {
 				return false
 			}
-			nextCoord = minCoord(byY[pos.y], pos.x, nextCoord, true)
-			pos.x = nextCoord - 1
+			nextCoord = minCoord(byY[pos.Y], pos.X, nextCoord, true)
+			pos.X = nextCoord - 1
 		case 2:
-			if len(byX[pos.x]) == 0 {
+			if len(byX[pos.X]) == 0 {
 				return false
 			}
-			nextCoord = minCoord(byX[pos.x], pos.y, nextCoord, true)
-			pos.y = nextCoord - 1
+			nextCoord = minCoord(byX[pos.X], pos.Y, nextCoord, true)
+			pos.Y = nextCoord - 1
 		default:
-			if len(byY[pos.y]) == 0 {
+			if len(byY[pos.Y]) == 0 {
 				return false
 			}
-			nextCoord = minCoord(byY[pos.y], pos.x, nextCoord, false)
-			pos.x = nextCoord + 1
+			nextCoord = minCoord(byY[pos.Y], pos.X, nextCoord, false)
+			pos.X = nextCoord + 1
 		}
 
 		if nextCoord == -1 {
@@ -156,7 +143,7 @@ func calcPath(debug bool, f field) *set.Set[point] {
 		stepped.Upsert(pos)
 		newPos := pos.Add(dirs[dir])
 		// check for out of bounds
-		if newPos.x < 0 || newPos.y < 0 || newPos.x >= f.size.x || newPos.y >= f.size.y {
+		if newPos.X < 0 || newPos.Y < 0 || newPos.X >= f.size.X || newPos.Y >= f.size.Y {
 			break
 		}
 		// check for wall
@@ -172,7 +159,7 @@ func calcPath(debug bool, f field) *set.Set[point] {
 }
 
 func parse(input []string) (f field) {
-	f.size = point{x: len(input[0]), y: len(input)}
+	f.size = point{X: len(input[0]), Y: len(input)}
 	f.walls = set.New[point]()
 	for y := 0; y < len(input); y++ {
 		for x := 0; x < len(input[y]); x++ {
@@ -180,9 +167,9 @@ func parse(input []string) (f field) {
 			case '.':
 				continue
 			case '^':
-				f.startPos = point{x, y}
+				f.startPos = point{X: x, Y: y}
 			case '#':
-				f.walls.Upsert(point{x, y})
+				f.walls.Upsert(point{X: x, Y: y})
 			}
 		}
 	}
@@ -193,8 +180,8 @@ func groupWalls(walls *set.Set[point]) (byX map[int][]int, byY map[int][]int) {
 	byX = make(map[int][]int)
 	byY = make(map[int][]int)
 	for wall := range walls.Iterator() {
-		byX[wall.x] = append(byX[wall.x], wall.y)
-		byY[wall.y] = append(byY[wall.y], wall.x)
+		byX[wall.X] = append(byX[wall.X], wall.Y)
+		byY[wall.Y] = append(byY[wall.Y], wall.X)
 	}
 
 	return

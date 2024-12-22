@@ -65,7 +65,7 @@ func (d *DayRunner) CountDays() int {
 	c := 0
 	for _, day := range d.days {
 		if day == nil {
-			break
+			continue
 		}
 		c++
 	}

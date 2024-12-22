@@ -65,12 +65,12 @@ func day(dayPicker *picker.DayRunner, num int, part2 bool, test bool, debug bool
 	inData, err := fileparser.GetInput(inFile)
 	if err != nil {
 		fmt.Println("Error read input file:", err)
-		os.Exit(1)
+		return
 	}
 	testData, err := fileparser.ReadTests(testFile)
 	if err != nil {
 		fmt.Println("Error read test file:", err)
-		os.Exit(1)
+		return
 	}
 
 	doneTest := true
@@ -108,7 +108,7 @@ func day(dayPicker *picker.DayRunner, num int, part2 bool, test bool, debug bool
 	}
 
 	if !doneTest {
-		os.Exit(1)
+		return
 	}
 
 	fmt.Println("\nDay", num, "\nAnswers:")
