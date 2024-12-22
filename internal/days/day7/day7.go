@@ -33,14 +33,14 @@ func (Day) Solve2(input []string, debug bool) string {
 	return solve(input, debug, true)
 }
 
-func solve(input []string, debug, day2 bool) string {
+func solve(input []string, debug, part2 bool) string {
 	print := utils.DebugPrint(debug)
 	eqs := parse(input)
 	print("Equasion count: %d\n", len(eqs))
 
 	var acc int64
 	for _, eq := range eqs {
-		if canSolveReq(eq.nums[0], 0, eq, day2) {
+		if canSolveReq(eq.nums[0], 0, eq, part2) {
 			acc += eq.res
 		}
 	}

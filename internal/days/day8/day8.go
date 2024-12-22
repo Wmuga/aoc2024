@@ -21,7 +21,7 @@ func (Day) Solve2(input []string, debug bool) string {
 	return solve(input, debug, true)
 }
 
-func solve(input []string, debug, day2 bool) string {
+func solve(input []string, debug, part2 bool) string {
 	print := utils.DebugPrint(debug)
 
 	antennas, size := parse(input)
@@ -53,7 +53,7 @@ func solve(input []string, debug, day2 bool) string {
 					antiNodes.Upsert(pos2)
 				}
 
-				if !day2 {
+				if !part2 {
 					continue
 				}
 				// add antennas as nodes
