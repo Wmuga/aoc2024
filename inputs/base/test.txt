@@ -1,0 +1,9 @@
+@Test 1
+@Part 1
+@Answer answer_for_test
+input_for_test
+
+@Test 2
+@Part 2
+@Answer answer_for_test
+input_for_test
