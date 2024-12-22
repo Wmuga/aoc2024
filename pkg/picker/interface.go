@@ -62,5 +62,12 @@ func (d *DayRunner) GetDay(num int) (day models.Day, ok bool) {
 }
 
 func (d *DayRunner) CountDays() int {
-	return len(d.days)
+	c := 0
+	for _, day := range d.days {
+		if day == nil {
+			break
+		}
+		c++
+	}
+	return c
 }

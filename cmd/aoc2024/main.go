@@ -49,7 +49,7 @@ func main() {
 		day(dayPicker, i, f.part2, f.test, f.debug)
 	}
 
-	fmt.Println("Solved everything in", time.Since(start))
+	fmt.Println("\nSolved everything in", time.Since(start))
 }
 
 func day(dayPicker *picker.DayRunner, num int, part2 bool, test bool, debug bool) {

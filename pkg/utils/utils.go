@@ -8,7 +8,9 @@ import (
 	"github.com/wmuga/aoc2019/pkg/utils"
 )
 
-var reInt = regexp.MustCompile(`[+-]?	\d+`)
+var (
+	reInt = regexp.MustCompile(`([+-]?\d+)`)
+)
 
 func ParseIntsLine(line string) ([]int, error) {
 	data := strings.Fields(line)
@@ -20,7 +22,7 @@ func GetInts(line string) ([]int64, error) {
 	ints := make([]int64, len(intsStr))
 	for i := range intsStr {
 		var err error
-		ints[i], err = strconv.ParseInt(line, 10, 64)
+		ints[i], err = strconv.ParseInt(intsStr[i], 10, 64)
 		if err != nil {
 			return nil, err
 		}
