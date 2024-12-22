@@ -13,6 +13,21 @@ type AoCDay struct {
 	Solver models.Day
 }
 
+// Stud - day model for not implemented days
+type Stud struct{}
+
+// Solve1 implements models.Day.
+func (s Stud) Solve1(input []string, debug bool) string {
+	return ""
+}
+
+// Solve2 implements models.Day.
+func (s Stud) Solve2(input []string, debug bool) string {
+	return ""
+}
+
+var _ models.Day = Stud{}
+
 func NewDayRunner(days ...AoCDay) *DayRunner {
 	d := DayRunner{
 		days: make([]models.Day, 25),
@@ -38,5 +53,14 @@ func (d *DayRunner) GetDay(num int) (day models.Day, ok bool) {
 		return nil, false
 	}
 
+	// skip studs
+	if _, ok := day.(Stud); ok {
+		return nil, false
+	}
+
 	return day, true
+}
+
+func (d *DayRunner) CountDays() int {
+	return len(d.days)
 }

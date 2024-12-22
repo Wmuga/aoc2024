@@ -1,45 +1,67 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"strconv"
 	"time"
 
 	fileparser "github.com/wmuga/aoc2019/pkg/fileParser"
+
 	"github.com/wmuga/aoc2024/internal/days"
 	"github.com/wmuga/aoc2024/pkg/picker"
 )
 
-const (
-	// day number
-	dayNum = 6
-	// solve part 2
-	withPart2 = true
-	// Check solution on test data
-	toTest = false
-	// add debug prints to solution
-	debugInput = false
-)
+type flags struct {
+	num   int
+	part2 bool
+	test  bool
+	debug bool
+}
 
-func getFileNames(day int) (input string, test string) {
-	dayStr := strconv.Itoa(day)
-	prefix := "inputs/day" + dayStr
-	return prefix + "/in.txt", prefix + "/test.txt"
+func parseFlags() (f flags) {
+	flag.IntVar(&f.num, "n", 0, "Day number. 0 - all")
+	flag.BoolVar(&f.part2, "p", true, "With part2")
+	flag.BoolVar(&f.test, "t", false, "Run tests")
+	flag.BoolVar(&f.debug, "d", false, "Debug actual input")
+	flag.Usage = func() {
+		flag.PrintDefaults()
+		os.Exit(0)
+	}
+	flag.Parse()
+	return f
 }
 
 func main() {
+	f := parseFlags()
+
 	dayPicker := picker.NewDayRunner()
 	days.Populate(dayPicker)
+
+	if f.num != 0 {
+		day(dayPicker, f.num, f.part2, f.test, f.debug)
+		return
+	}
+
+	start := time.Now()
+	for i := 1; i <= dayPicker.CountDays(); i++ {
+		day(dayPicker, i, f.part2, f.test, f.debug)
+	}
+
+	fmt.Println("Solved everything in", time.Since(start))
+}
+
+func day(dayPicker *picker.DayRunner, num int, part2 bool, test bool, debug bool) {
 	// take correct day
-	day, ok := dayPicker.GetDay(dayNum)
+	day, ok := dayPicker.GetDay(num)
 	if !ok {
-		fmt.Printf("Day %d not found\n", dayNum)
-		os.Exit(1)
+		fmt.Printf("Day %d not found\n", num)
+		return
 	}
 
 	// get input and test data
-	inFile, testFile := getFileNames(dayNum)
+	inFile, testFile := getFileNames(num)
 	inData, err := fileparser.GetInput(inFile)
 	if err != nil {
 		fmt.Println("Error read input file:", err)
@@ -53,7 +75,7 @@ func main() {
 
 	doneTest := true
 	// make tests
-	if toTest {
+	if test {
 		for _, test := range testData {
 			var res string
 			fmt.Println("Test", test.Name, "for part", test.Part)
@@ -61,7 +83,7 @@ func main() {
 			case 1:
 				res = day.Solve1(test.Data, true)
 			case 2:
-				if !withPart2 {
+				if !part2 {
 					fmt.Println("Skip part2")
 					continue
 				}
@@ -89,15 +111,21 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println("\nAnswers:")
+	fmt.Println("\nDay", num, "\nAnswers:")
 
 	start := time.Now()
-	res := day.Solve1(inData, debugInput)
+	res := day.Solve1(inData, debug)
 	fmt.Println("Time:", time.Since(start), "Part 1:", res)
 
-	if withPart2 {
+	if part2 {
 		start = time.Now()
-		res := day.Solve2(inData, debugInput)
+		res := day.Solve2(inData, debug)
 		fmt.Println("Time:", time.Since(start), "Part 2:", res)
 	}
+}
+
+func getFileNames(day int) (input string, test string) {
+	dayStr := strconv.Itoa(day)
+	prefix := "inputs/day" + dayStr
+	return prefix + "/in.txt", prefix + "/test.txt"
 }
