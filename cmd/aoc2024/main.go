@@ -7,10 +7,17 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/fatih/color"
+
 	fileparser "github.com/wmuga/aoc2019/pkg/fileParser"
 
 	"github.com/wmuga/aoc2024/internal/days"
 	"github.com/wmuga/aoc2024/pkg/picker"
+)
+
+var (
+	strOk = color.GreenString("[OK]")
+	strNo = color.RedString("[NO]")
 )
 
 type flags struct {
@@ -97,9 +104,9 @@ func day(dayPicker *picker.DayRunner, num int, part2 bool, test bool, debug bool
 				continue
 			}
 
-			out := "[OK]"
+			out := strOk
 			if test.Answer != res {
-				out = "[NO]"
+				out = strNo
 				doneTest = false
 			}
 
