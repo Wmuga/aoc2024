@@ -29,3 +29,63 @@ func GetInts(line string) ([]int64, error) {
 	}
 	return ints, nil
 }
+
+// NextInt gets next int form string.
+// startIdx - index to start from
+// i - result.
+// idx - index after num.
+func NextInt(line string, startIdx int) (i int64, idx int, err error) {
+	// states:  0 - [+-0-9], 1 - [0-9]
+	state := 0
+	var (
+		numStart int
+		numLen   int
+	)
+
+	for idx = startIdx; idx < len(line); idx++ {
+		// check for +- in front of number
+		if line[idx] == '+' {
+			if state == 0 {
+				numStart = idx
+				numLen = 1
+				state = 1
+				continue
+			}
+			break
+		}
+
+		if line[idx] == '-' {
+			if state == 0 {
+				numStart = idx
+				numLen = 1
+				state = 1
+				continue
+			}
+			break
+		}
+
+		// check for digits
+		if line[idx] >= '0' && line[idx] <= '9' {
+			if state == 0 {
+				numStart = idx
+				state = 1
+			}
+			numLen++
+			continue
+		}
+
+		// if nothing - check if only found '+' or '-'
+		if state == 1 {
+			if numLen == 1 && (line[numStart] == '+' || line[numStart] == '-') {
+				state = 0
+				numLen = 0
+				numStart = 0
+				continue
+			}
+			break
+		}
+	}
+
+	i, err = strconv.ParseInt(line[numStart:numStart+numLen], 10, 64)
+	return
+}
