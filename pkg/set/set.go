@@ -16,6 +16,11 @@ func (s *Set[T]) Clone() *Set[T] {
 	return newSet
 }
 
+func (s *Set[T]) Contains(item T) bool {
+	_, ok := s.Set.Get(item)
+	return ok
+}
+
 func New[T comparable]() *Set[T] {
 	return &Set[T]{Set: set.NewSet[T]()}
 }
