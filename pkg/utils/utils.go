@@ -89,3 +89,44 @@ func NextInt(line string, startIdx int) (i int64, idx int, err error) {
 	i, err = strconv.ParseInt(line[numStart:numStart+numLen], 10, 64)
 	return
 }
+
+type CRTArg struct {
+	Rem int
+	Mod int
+}
+
+func CRT(args ...CRTArg) int {
+	if len(args) == 0 {
+		return 0
+	}
+
+	M := int64(args[0].Mod)
+	for i := 1; i < len(args); i++ {
+		M *= int64(args[i].Mod)
+	}
+
+	var prime int64
+	for i := range args {
+		a := M / int64(args[i].Mod)
+		x := egdc(a, int64(args[i].Rem), int64(args[i].Mod))
+		prime += a * x
+	}
+	return int((prime + M) % M)
+}
+
+// a*x = b mod m
+func egdc(a, b, m int64) int64 {
+	var (
+		r0, s0, t0 int64 = a, 1, 0
+		r1, s1, t1 int64 = m, 0, 1
+	)
+
+	for r1 != 0 {
+		q := r0 / r1
+		r0, r1 = r1, r0-r1*q
+		s0, s1 = s1, s0-s1*q
+		t0, t1 = t1, t0-t1*q
+	}
+
+	return (s0*b + m) % m
+}
