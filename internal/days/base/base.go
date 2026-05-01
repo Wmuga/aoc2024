@@ -1,11 +1,11 @@
 package base
 
-import "github.com/wmuga/aoc2019/pkg/utils"
+import "github.com/wmuga/aoc2024/pkg/utils"
 
 type Day struct{}
 
 func (Day) Solve1(input []string, debug bool) string {
-	print := utils.DebugPrint(debug)
+	print := utils.LazyDebugPrint(debug)
 
 	parse(input)
 
@@ -14,7 +14,7 @@ func (Day) Solve1(input []string, debug bool) string {
 }
 
 func (Day) Solve2(input []string, debug bool) string {
-	print := utils.DebugPrint(debug)
+	print := utils.LazyDebugPrint(debug)
 
 	parse(input)
 

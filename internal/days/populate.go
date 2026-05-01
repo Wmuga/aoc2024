@@ -10,6 +10,7 @@ import (
 	"github.com/wmuga/aoc2024/internal/days/day12"
 	"github.com/wmuga/aoc2024/internal/days/day13"
 	"github.com/wmuga/aoc2024/internal/days/day14"
+	"github.com/wmuga/aoc2024/internal/days/day15"
 	"github.com/wmuga/aoc2024/internal/days/day2"
 	"github.com/wmuga/aoc2024/internal/days/day3"
 	"github.com/wmuga/aoc2024/internal/days/day4"
@@ -35,6 +36,7 @@ var days = []models.Day{
 	day12.Day{},
 	day13.Day{},
 	day14.Day{},
+	day15.Day{},
 }
 
 func Populate(d *picker.DayRunner) *picker.DayRunner {

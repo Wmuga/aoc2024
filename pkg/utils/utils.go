@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -129,4 +130,23 @@ func egdc(a, b, m int64) int64 {
 	}
 
 	return (s0*b + m) % m
+}
+
+func LazyDebugPrint(debug bool) func(format string, args ...func() []interface{}) {
+	if !debug {
+		return func(format string, args ...func() []interface{}) {}
+	}
+
+	return func(format string, args ...func() []interface{}) {
+		if !strings.HasSuffix(format, "\n") {
+			format += "\n"
+		}
+
+		if len(args) == 0 {
+			fmt.Print(format)
+			return
+		}
+
+		fmt.Printf(format, args[0]()...)
+	}
 }

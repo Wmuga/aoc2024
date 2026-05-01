@@ -40,3 +40,4 @@ type Point3D struct {
 }
 
 type PrintFunc func(string, ...interface{})
+type LazyPrintFunc func(string, func() []interface{})
